@@ -18,15 +18,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.content_lol.all_champs().subscribe((res) =>{
       Object.keys(res.data).forEach((d:any) => {
-        this.content_lol.champ(d).subscribe((resp) => {
-          this.champion_list.push(resp.data[d]);
-        })
+        this.champion_list.push(res.data[d]);
       });
     });
   }
 
   consulta(){
-    console.log('consulta');
+    console.log(this.champion_list);
   }
 
 }
