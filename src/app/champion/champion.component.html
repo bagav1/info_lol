@@ -1,0 +1,36 @@
+<!-- <p>{{params.id}}</p>
+<p>{{champion?.title}}</p>
+<p>{{champion?.blurb}}</p> -->
+
+<div class="cont">
+  <div class="tab">
+    <button class="tablinks" type="button" (click)="openTab($event, 'presentacion')" id="defaultOpen">PRESENTACION</button>
+    <button class="tablinks" type="button" (click)="openTab($event, 'estadisticas')">ESTADISTICAS</button>
+    <button class="tablinks" type="button" (click)="openTab($event, 'habilidades')">HABILIDADES</button>
+    <button class="tablinks" type="button" (click)="openTab($event, 'imagenes')">IMAGENES</button>
+  </div>
+
+  <div id="titleHeader" class="tabcontent blockDysplay-fix">
+    <h1>{{params.id.toUpperCase()}}</h1>
+    <mat-divider></mat-divider>
+    <h4><i>{{champion?.title}}</i></h4>
+  </div>
+
+  <div id="presentacion" class="tabcontent noneDysplay">
+    <h3>HISTORIA</h3>
+    <p>{{champion?.lore}}</p>
+  </div>
+
+  <div id="estadisticas" class="tabcontent noneDysplay">
+    <p>Paris is the capital of France.</p>
+  </div>
+
+  <div id="habilidades" class="tabcontent noneDysplay">
+    <p>Tokyo is the capital of Japan.</p>
+  </div>
+
+  <div id="imagenes" class="tabcontent noneDysplay">
+    <h3>Tokyo</h3>
+    <p>Tokyo is the capital of Japan.</p>
+  </div>
+</div>

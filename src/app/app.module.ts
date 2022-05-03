@@ -9,13 +9,17 @@ import { HelpComponent } from './help/help.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChampionComponent } from './champion/champion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    HelpComponent
+    HelpComponent,
+    ChampionComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +28,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserAnimationsModule,
 
     MatCardModule,
+    MatDividerModule,
+    MdbTabsModule,
     FlexLayoutModule
   ],
   providers: [],
