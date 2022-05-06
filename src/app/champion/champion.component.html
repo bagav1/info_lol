@@ -4,10 +4,11 @@
 
 <div class="cont">
   <div class="tab">
-    <button class="tablinks" type="button" (click)="openTab($event, 'presentacion')" id="defaultOpen">PRESENTACION</button>
-    <button class="tablinks" type="button" (click)="openTab($event, 'estadisticas')">ESTADISTICAS</button>
+    <button class="tablinks" type="button" (click)="openTab($event, 'presentacion')">PRESENTACION</button>
+    <button class="tablinks" type="button" (click)="openTab($event, 'estadisticas')" id="defaultOpen">ESTADISTICAS</button>
     <button class="tablinks" type="button" (click)="openTab($event, 'habilidades')">HABILIDADES</button>
     <button class="tablinks" type="button" (click)="openTab($event, 'imagenes')">IMAGENES</button>
+    <button class="tablinks" type="button" [routerLink]="''">INICIO</button>
   </div>
 
   <div id="titleHeader" class="tabcontent blockDysplay-fix">
@@ -22,11 +23,12 @@
   </div>
 
   <div id="estadisticas" class="tabcontent noneDysplay">
-    <p>Paris is the capital of France.</p>
+    <div class="stats-panel">
+      <app-stats [champion]="champion"></app-stats>
+    </div>
   </div>
 
   <div id="habilidades" class="tabcontent noneDysplay">
-    <p>Tokyo is the capital of Japan.</p>
   </div>
 
   <div id="imagenes" class="tabcontent noneDysplay">

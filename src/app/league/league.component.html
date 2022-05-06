@@ -1,0 +1,25 @@
+<form [formGroup]="queryLeague" (ngSubmit)="consultar()">
+  <label for="rankedSelect">Selector de Ranked</label>
+  <select id="rankedSelect" class="select-option-league ranked" formControlName="queueId" [value]="'0: def'">
+    <option *ngFor="let queue of this.env.queueId | keyvalue" [ngValue]="queue.value">{{queue.key}}</option>
+  </select>
+
+  <label for="ligaSelect">Selector de Liga</label>
+  <select id="ligaSelect" class="select-option-league league" formControlName="tier">
+    <option *ngFor="let tier of this.env.tier | keyvalue" [value]="tier.value">{{tier.key}}</option>
+  </select>
+
+  <label for="divisionSelect">Selector de Division</label>
+  <select id="divisionSelect" class="select-option-league division" formControlName="division">
+    <option *ngFor="let division of this.env.division | keyvalue" [value]="division.value">{{division.key}}</option>
+  </select>
+  <button title="ir" class="button" type="submit">IR</button>
+</form>
+
+<ol>
+  <li *ngFor="let summoner of this.summoner">{{summoner?.data.name}}</li>
+</ol>
+
+<ul>
+  <li *ngFor="let summoner of this.summoner">{{summoner?.matchs[0]}}</li>
+</ul>
