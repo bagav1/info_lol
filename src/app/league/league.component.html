@@ -1,4 +1,4 @@
-<form [formGroup]="queryLeague" (ngSubmit)="consultar()">
+<!-- <form [formGroup]="queryLeague" (ngSubmit)="consultar()">
   <label for="rankedSelect">Selector de Ranked</label>
   <select id="rankedSelect" class="select-option-league ranked" formControlName="queueId" [value]="'0: def'">
     <option *ngFor="let queue of this.env.queueId | keyvalue" [ngValue]="queue.value">{{queue.key}}</option>
@@ -22,4 +22,428 @@
 
 <ul>
   <li *ngFor="let summoner of this.summoner">{{summoner?.matchs[0]}}</li>
-</ul>
+</ul> -->
+
+<mat-sidenav-container class="container-sidebar">
+  <mat-sidenav mode="side" opened [fixedInViewport]="true">
+    <form class="q-sumoner" [formGroup]="qSummoner" (ngSubmit)="consultar()">
+      <mat-form-field class="inp-name" appearance="legacy">
+        <mat-label>Invocador</mat-label>
+        <input matInput placeholder="ej.: wido" formControlName="name">
+      </mat-form-field>
+      <button type="submit" role="button" class="btn-query">Buscar</button>
+    </form>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div fxLayout="row wrap" fxLayoutGap="grid" *ngIf="this.datos;else noDatos">
+      <div fxFlex="50%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%">
+        <table result="WIN" class="team1">
+          <colgroup>
+            <col width="50">
+            <col width="18">
+            <col width="18">
+            <col>
+            <col width="65">
+            <col width="76">
+            <col width="66">
+            <col width="66">
+            <col width="55">
+            <col width="170">
+          </colgroup>
+          <thead>
+            <tr>
+              <th colspan="4"><span class="result">Victoria</span>(Equipo Azul)</th>
+              <th>División</th>
+              <th>KDA</th>
+              <th>Daño</th>
+              <th>Centinelas de visión</th>
+              <th>Súbditos</th>
+              <th>Objeto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-summoner" *ngFor="let summ of this.matchs[0].team1.participants">
+              <td class="champion">
+                <a href="" target="_blank" rel="noreferrer">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_champ + summ.championName + '.png'"
+                      [alt]="summ.championName"
+                      title="{{summ.championName}}">
+                    <div class="level">{{summ.champLevel}}</div>
+                  </div>
+                </a>
+              </td>
+              <td class="spells">
+                <div class="">
+                  <img
+                    [src]="this.env.img_summoner_spell + summ.summoner1Info.image.full"
+                    [alt]="summ.summoner1Info.name"
+                    title="{{summ.summoner1Info.name}}">
+                </div>
+                <div class="">
+                  <img
+                  [src]="this.env.img_summoner_spell + summ.summoner2Info.image.full"
+                  [alt]="summ.summoner2Info.name"
+                  title="{{summ.summoner2Info.name}}">
+                </div>
+              </td>
+              <td class="runes">
+                <div class="">
+                  <img
+                    [src]="this.env.img_runes_perks + summ.perks.styles[0].selections[0].perkInfo.icon"
+                    [alt]="summ.perks.styles[0].selections[0].perkInfo.name"
+                    title="{{summ.perks.styles[0].selections[0].perkInfo.name}}">
+                </div>
+                <div class="">
+                  <img
+                  [src]="this.env.img_runes_perks + summ.perks.styles[1].selections[0].perkInfo.icon"
+                  [alt]="summ.perks.styles[1].selections[0].perkInfo.name"
+                  title="{{summ.perks.styles[1].selections[0].perkInfo.name}}">
+                </div>
+              </td>
+              <td class="name">
+                <a href="" target="_blank" rel="noreferrer">{{summ.summonerName}}</a>
+              </td>
+              <td class="tier">Level {{summ.summonerLevel}}</td>
+              <td class="kda">
+                <div class="kda-score">{{summ.challenges.kda.toFixed(2)}}:1</div>
+                <div class="k-d-a">{{summ.kills}}/{{summ.deaths}}/{{summ.assists}} <div class="">({{(((summ.kills + summ.assists) == 0 ? 1 : (summ.kills + summ.assists)) / (this.matchs[0].team1.info.objectives.champion.kills == 0 ? 1 : this.matchs[0].team1.info.objectives.champion.kills) * 100).toFixed(0)}}%)</div>
+                </div>
+              </td>
+              <td class="damage">
+                <div class="">
+                  <div class="dealt">{{summ.totalDamageDealtToChampions}}</div>
+                  <div class="progress">
+                    <div class="fill"
+                      [ngStyle]="{'width': (((summ.totalDamageDealtToChampions == 0 ? 1 : summ.totalDamageDealtToChampions) / (this.matchs[0].info.highestChampionDamage == 0 ? 1 : this.matchs[0].info.highestChampionDamage)) * 100).toFixed(0) + '%'}"></div>
+                  </div>
+                </div>
+              </td>
+              <td class="ward">
+                <div class="">
+                  <div>0</div>
+                  <div>0 / 0</div>
+                </div>
+              </td>
+              <td class="cs">
+                <div>{{summ.totalMinionsKilled}}</div>
+                <div>{{((summ.totalMinionsKilled == 0 ? 1 : summ.totalMinionsKilled) / (this.matchs[0].info.gameDuration / 60)).toFixed(1)}} por minuto</div>
+              </td>
+              <td class="items">
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item0?.image.full || '7050.png')"
+                      [alt]="summ.item0?.name || '...'"
+                      title="{{summ.item0?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item1?.image.full || '7050.png')"
+                      [alt]="summ.item1?.name || '...'"
+                      title="{{summ.item1?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item2?.image.full || '7050.png')"
+                      [alt]="summ.item2?.name || '...'"
+                      title="{{summ.item2?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item3?.image.full || '7050.png')"
+                      [alt]="summ.item3?.name || '...'"
+                      title="{{summ.item3?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item4?.image.full || '7050.png')"
+                      [alt]="summ.item4?.name || '...'"
+                      title="{{summ.item4?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item5?.image.full || '7050.png')"
+                      [alt]="summ.item5?.name || '...'"
+                      title="{{summ.item5?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item6?.image.full || '7050.png')"
+                      [alt]="summ.item6?.name || '...'"
+                      title="{{summ.item6?.name || 'item'}}">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div fxFlex="50%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%">
+        <table result="WIN" class="team2">
+          <colgroup>
+            <col width="50">
+            <col width="18">
+            <col width="18">
+            <col>
+            <col width="65">
+            <col width="76">
+            <col width="66">
+            <col width="66">
+            <col width="55">
+            <col width="170">
+          </colgroup>
+          <thead>
+            <tr>
+              <th colspan="4"><span class="result">Victoria</span>(Equipo Azul)</th>
+              <th>División</th>
+              <th>KDA</th>
+              <th>Daño</th>
+              <th>Centinelas de visión</th>
+              <th>Súbditos</th>
+              <th>Objeto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-summoner" *ngFor="let summ of this.matchs[0].team2.participants">
+              <td class="champion">
+                <a href="" target="_blank" rel="noreferrer">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_champ + summ.championName + '.png'"
+                      [alt]="summ.championName"
+                      title="{{summ.championName}}">
+                    <div class="level">{{summ.champLevel}}</div>
+                  </div>
+                </a>
+              </td>
+              <td class="spells">
+                <div class="">
+                  <img
+                    [src]="this.env.img_summoner_spell + summ.summoner1Info.image.full"
+                    [alt]="summ.summoner1Info.name"
+                    title="{{summ.summoner1Info.name}}">
+                </div>
+                <div class="">
+                  <img
+                  [src]="this.env.img_summoner_spell + summ.summoner2Info.image.full"
+                  [alt]="summ.summoner2Info.name"
+                  title="{{summ.summoner2Info.name}}">
+                </div>
+              </td>
+              <td class="runes">
+                <div class="">
+                  <img
+                    [src]="this.env.img_runes_perks + summ.perks.styles[0].selections[0].perkInfo.icon"
+                    [alt]="summ.perks.styles[0].selections[0].perkInfo.name"
+                    title="{{summ.perks.styles[0].selections[0].perkInfo.name}}">
+                </div>
+                <div class="">
+                  <img
+                  [src]="this.env.img_runes_perks + summ.perks.styles[1].selections[0].perkInfo.icon"
+                  [alt]="summ.perks.styles[1].selections[0].perkInfo.name"
+                  title="{{summ.perks.styles[1].selections[0].perkInfo.name}}">
+                </div>
+              </td>
+              <td class="name">
+                <a href="" target="_blank" rel="noreferrer">{{summ.summonerName}}</a>
+              </td>
+              <td class="tier">Level {{summ.summonerLevel}}</td>
+              <td class="kda">
+                <div class="kda-score">{{summ.challenges.kda.toFixed(2)}}:1</div>
+                <div class="k-d-a">{{summ.kills}}/{{summ.deaths}}/{{summ.assists}} <div class="">({{((summ.kills + summ.assists) / this.matchs[0].team2.info.objectives.champion.kills * 100).toFixed(0)}}%)</div>
+                </div>
+              </td>
+              <td class="damage">
+                <div class="">
+                  <div class="dealt">{{summ.totalDamageDealtToChampions}}</div>
+                  <div class="progress">
+                    <div class="fill"
+                      [ngStyle]="{'width': ((summ.totalDamageDealtToChampions / this.matchs[0].info.highestChampionDamage) * 100).toFixed(0) + '%'}"></div>
+                  </div>
+                </div>
+              </td>
+              <td class="ward">
+                <div class="">
+                  <div>0</div>
+                  <div>0 / 0</div>
+                </div>
+              </td>
+              <td class="cs">
+                <div>{{summ.totalMinionsKilled}}</div>
+                <div>{{(summ.totalMinionsKilled / (this.matchs[0].info.gameDuration / 60)).toFixed(1)}} por minuto</div>
+              </td>
+              <td class="items">
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item0?.image.full || '7050.png')"
+                      [alt]="summ.item0?.name || '...'"
+                      title="{{summ.item0?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item1?.image.full || '7050.png')"
+                      [alt]="summ.item1?.name || '...'"
+                      title="{{summ.item1?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item2?.image.full || '7050.png')"
+                      [alt]="summ.item2?.name || '...'"
+                      title="{{summ.item2?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item3?.image.full || '7050.png')"
+                      [alt]="summ.item3?.name || '...'"
+                      title="{{summ.item3?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item4?.image.full || '7050.png')"
+                      [alt]="summ.item4?.name || '...'"
+                      title="{{summ.item4?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item5?.image.full || '7050.png')"
+                      [alt]="summ.item5?.name || '...'"
+                      title="{{summ.item5?.name || 'item'}}">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="">
+                    <img
+                      [src]="this.env.img_item + (summ.item6?.image.full || '7050.png')"
+                      [alt]="summ.item6?.name || '...'"
+                      title="{{summ.item6?.name || 'item'}}">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noDatos>
+      CONSULTE PRIMERO PERRRO!!!
+    </ng-template>
+
+    <div> <!-- RELLENO -->
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+      ...<br>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

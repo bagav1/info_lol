@@ -45,9 +45,9 @@ export class ContentService extends servicesTools {
       );
   }
 
-  summoner_data(name: string): Observable<any> {
+  summoner_data(name: string, count: number = 1): Observable<any> {
     return this.http
-      .get<any>(env.API_URL + '/summoner_data/' + name, this.getHttpOptions())
+      .get<any>(env.API_URL + '/summoner_data/' + name + '/' + count, this.getHttpOptions())
       .pipe(
         map((res: any) => {
           return res;
@@ -70,16 +70,16 @@ export class ContentService extends servicesTools {
   match_list(puuid: string, count: number = 1, type: string = '', queue: number = 0): Observable<any> {
     if (queue === 0 && type === '') {
       var link = env.API_URL + '/match_list/' + puuid + '/' + count;
-      console.log('op1 sin parametros');
+      console.log('match_list:-> Consulta sin parametros adicionales');
     }else if(queue === 0 && type !== ''){
       var link = env.API_URL + '/match_list/' + puuid + '/' + count + '?t=' + type;
-      console.log('op2 con queue, sin type');
+      console.log('match_list:-> Consulta ccon queue, sin type');
     }else if(queue !== 0 && type === ''){
       var link = env.API_URL + '/match_list/' + puuid + '/' + count + '?q=' + queue;
-      console.log('op3 sin queue, con type');
+      console.log('match_list:-> Consulta sin queue, con type');
     }else{
       var link = env.API_URL + '/match_list/' + puuid + '/' + count + '?q=' + queue + '&t=' + type;
-      console.log('op4 con parametros');
+      console.log('match_list:-> Consulta con parametros completos');
     };
     return this.http
       .get<any>(link, this.getHttpOptions())

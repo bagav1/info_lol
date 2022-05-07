@@ -2,8 +2,6 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { MissingTranslationStrategy } from "@angular/compiler/src/core";
-
 const actual_version = '12.8.1';
 
 export const environment = {
@@ -20,6 +18,7 @@ export const environment = {
   img_item:`http://ddragon.leagueoflegends.com/cdn/${actual_version}/img/item/`,
   img_summoner_spell:`http://ddragon.leagueoflegends.com/cdn/${actual_version}/img/spell/`,
   img_profile_icon:`http://ddragon.leagueoflegends.com/cdn/${actual_version}/img/profileicon/`,
+  img_runes_perks:`http://ddragon.leagueoflegends.com/cdn/img/`,
 
   queueId: {
       soloDuo_5v5:'RANKED_SOLO_5x5',

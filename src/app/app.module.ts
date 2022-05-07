@@ -14,6 +14,12 @@ import { LeagueComponent } from './league/league.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -36,6 +42,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
     MatCardModule,
     MatDividerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
     MdbTabsModule,
     FlexLayoutModule
   ],
